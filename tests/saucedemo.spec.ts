@@ -33,4 +33,18 @@ test.describe('Sauce Demo - Fluxo de Compra', () => {
     await expect(shoppingCartBadge).toBeVisible();
     await expect(shoppingCartBadge).toHaveText('1');
   });
+
+  test('Deve exibir mensagem de erro ao tentar fazer login com usuário bloqueado', async ({ page }) => {
+    // Tenta fazer login com um usuário que está bloqueado no Sauce Demo
+    await page.locator('[data-test="username"]').fill('locked_out_user');
+    await page.locator('[data-test="password"]').fill('secret_sauce');
+    await page.locator('[data-test="login-button"]').click();
+
+    // Localiza o container de erro
+    const errorMessage = page.locator('[data-test="error"]');
+    
+    // Valida se o elemento de erro está visível e contém o texto esperado
+    await expect(errorMessage).toBeVisible();
+    await expect(errorMessage).toHaveText('Epic sadface: Sorry, this user has been locked out.');
+  });
 });
