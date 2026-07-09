@@ -71,4 +71,22 @@ test.describe('Sauce Demo - Fluxo de Compra', () => {
     // Valida se a lista capturada na tela está idêntica à nossa lista ordenada esperada
     expect(pricesAsNumbers).toEqual(sortedPricesExpected);
   });
+
+  test('Deve remover um item do carrinho com sucesso', async ({ page }) => {
+    // Login e adição inicial
+    await page.locator('[data-test="username"]').fill('standard_user');
+    await page.locator('[data-test="password"]').fill('secret_sauce');
+    await page.locator('[data-test="login-button"]').click();
+    await page.locator('[data-test="add-to-cart-sauce-labs-backpack"]').click();
+
+    // Valida que o carrinho tem 1 item antes de remover
+    const shoppingCartBadge = page.locator('.shopping_cart_badge');
+    await expect(shoppingCartBadge).toHaveText('1');
+
+    // Clica no botão de remover (que substitui o botão de adicionar)
+    await page.locator('[data-test="remove-sauce-labs-backpack"]').click();
+
+    // Valida que o contador do carrinho desapareceu da tela (ficou vazio)
+    await expect(shoppingCartBadge).not.toBeVisible();
+  });
 });
