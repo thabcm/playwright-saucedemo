@@ -1,4 +1,4 @@
-# Automação de Testes com Playwright — Sauce Demo
+# Automação de Testes com Playwright (utilizando Sauce Demo)
 
 Este projeto é uma suíte de testes automatizados desenvolvida em Playwright com TypeScript, utilizando o site Sauce Demo para os cenários de teste. 
 
