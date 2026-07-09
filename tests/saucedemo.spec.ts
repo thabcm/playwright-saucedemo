@@ -53,4 +53,12 @@ test.describe('Sauce Demo - Fluxo de Compra', () => {
 
     expect(precosNaTela).toEqual(precosOrdenadosEsperados);
   });
+
+  test('Deve conter os links corretos para as redes sociais no rodape', async () => {
+    await loginPage.realizarLogin('standard_user');
+
+    // Valida se os atributos 'href' dos links contêm as URLs corretas das redes sociais
+    await expect(productsPage.linkTwitter).toHaveAttribute('href', 'https://twitter.com/saucelabs');
+    await expect(productsPage.linkFacebook).toHaveAttribute('href', 'https://www.facebook.com/saucelabs');
+  });
 });

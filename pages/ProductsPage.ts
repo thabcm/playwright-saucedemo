@@ -9,6 +9,8 @@ export class ProductsPage {
   readonly iconeCarrinhoBadge: Locator;
   readonly seletorOrdenacao: Locator;
   readonly precosProdutos: Locator;
+  readonly linkTwitter: Locator;
+  readonly linkFacebook: Locator;
 
   // Inicializar os locators no construtor
   constructor(page: Page) {
@@ -19,6 +21,8 @@ export class ProductsPage {
     this.iconeCarrinhoBadge = page.locator('.shopping_cart_badge');
     this.seletorOrdenacao = page.locator('[data-test="product-sort-container"]');
     this.precosProdutos = page.locator('.inventory_item_price');
+    this.linkTwitter = page.locator('.social_twitter a');
+    this.linkFacebook = page.locator('.social_facebook a');
   }
 
   // Criar os métodos de ação
