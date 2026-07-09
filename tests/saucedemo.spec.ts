@@ -47,4 +47,28 @@ test.describe('Sauce Demo - Fluxo de Compra', () => {
     await expect(errorMessage).toBeVisible();
     await expect(errorMessage).toHaveText('Epic sadface: Sorry, this user has been locked out.');
   });
+
+  test('Deve ordenar os produtos por preço do menor para o maior', async ({ page }) => {
+    // Realiza o login padrão
+    await page.locator('[data-test="username"]').fill('standard_user');
+    await page.locator('[data-test="password"]').fill('secret_sauce');
+    await page.locator('[data-test="login-button"]').click();
+
+    // Seleciona a opção de ordenação por preço (Low to High) no elemento select
+    // O valor 'lohi' corresponde a essa opção no HTML do Sauce Demo
+    await page.locator('[data-test="product-sort-container"]').selectOption('lohi');
+
+    // Captura todos os elementos de preço visíveis na página
+    const priceLocators = page.locator('.inventory_item_price');
+    
+    // Obtém os textos de todos os preços e os converte para números
+    const allPricesText = await priceLocators.allTextContents();
+    const pricesAsNumbers = allPricesText.map(price => parseFloat(price.replace('$', '')));
+
+    // Cria uma cópia da lista de preços e ordena de forma crescente para usar como referência
+    const sortedPricesExpected = [...pricesAsNumbers].sort((a, b) => a - b);
+
+    // Valida se a lista capturada na tela está idêntica à nossa lista ordenada esperada
+    expect(pricesAsNumbers).toEqual(sortedPricesExpected);
+  });
 });
