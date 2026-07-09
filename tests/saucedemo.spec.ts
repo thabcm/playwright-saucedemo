@@ -89,4 +89,36 @@ test.describe('Sauce Demo - Fluxo de Compra', () => {
     // Valida que o contador do carrinho desapareceu da tela (ficou vazio)
     await expect(shoppingCartBadge).not.toBeVisible();
   });
+
+  test('Deve finalizar uma compra com sucesso passando pelo checkout', async ({ page }) => {
+    // Login
+    await page.locator('[data-test="username"]').fill('standard_user');
+    await page.locator('[data-test="password"]').fill('secret_sauce');
+    await page.locator('[data-test="login-button"]').click();
+
+    // Adicionar produto e ir para o carrinho
+    await page.locator('[data-test="add-to-cart-sauce-labs-backpack"]').click();
+    await page.locator('.shopping_cart_link').click();
+    await expect(page).toHaveURL('https://www.saucedemo.com/cart.html');
+
+    // Avançar para o Checkout
+    await page.locator('[data-test="checkout"]').click();
+    await expect(page).toHaveURL('https://www.saucedemo.com/checkout-step-one.html');
+
+    // Preencher dados de envio
+    await page.locator('[data-test="firstName"]').fill('Thalita');
+    await page.locator('[data-test="lastName"]').fill('Melo');
+    await page.locator('[data-test="postalCode"]').fill('50000-000');
+    await page.locator('[data-test="continue"]').click();
+    await expect(page).toHaveURL('https://www.saucedemo.com/checkout-step-two.html');
+
+    // Finalizar a compra
+    await page.locator('[data-test="finish"]').click();
+    await expect(page).toHaveURL('https://www.saucedemo.com/checkout-complete.html');
+
+    // Validar mensagem de sucesso
+    const successHeader = page.locator('.complete-header');
+    await expect(successHeader).toBeVisible();
+    await expect(successHeader).toHaveText('Thank you for your order!');
+  });
 });
