@@ -61,4 +61,18 @@ test.describe('Sauce Demo - Fluxo de Compra', () => {
     await expect(productsPage.linkTwitter).toHaveAttribute('href', 'https://twitter.com/saucelabs');
     await expect(productsPage.linkFacebook).toHaveAttribute('href', 'https://www.facebook.com/saucelabs');
   });
+
+  test('Deve abrir a pagina de detalhes ao clicar no nome de um produto', async ({ page }) => {
+    await loginPage.realizarLogin('standard_user');
+
+    // Clica no link do primeiro produto mapeado na nossa Page
+    await productsPage.primeiroProdutoLink.click();
+
+    // Valida se a URL mudou para a página interna de detalhes do item
+    await expect(page).toHaveURL(/.*inventory-item.html/);
+
+    // Valida se o título principal que aparece na nova tela corresponde ao produto
+    const nomeProdutoDetalhe = page.locator('[data-test="inventory-item-name"]');
+    await expect(nomeProdutoDetalhe).toHaveText('Sauce Labs Backpack');
+  });
 });

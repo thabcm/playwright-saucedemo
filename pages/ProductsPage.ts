@@ -11,6 +11,7 @@ export class ProductsPage {
   readonly precosProdutos: Locator;
   readonly linkTwitter: Locator;
   readonly linkFacebook: Locator;
+  readonly primeiroProdutoLink: Locator;
 
   // Inicializar os locators no construtor
   constructor(page: Page) {
@@ -23,6 +24,7 @@ export class ProductsPage {
     this.precosProdutos = page.locator('.inventory_item_price');
     this.linkTwitter = page.locator('.social_twitter a');
     this.linkFacebook = page.locator('.social_facebook a');
+    this.primeiroProdutoLink = page.locator('[data-test="item-4-title-link"]');
   }
 
   // Criar os métodos de ação
