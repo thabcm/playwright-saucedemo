@@ -15,3 +15,8 @@ O objetivo principal foi aplicar boas práticas de automação, estruturando o p
 * **Massa de dados dinâmica:** Utilizar bibliotecas para gerar dados aleatórios nos formulários de checkout.
 * **Testes de API:** Automatizar testes de consumo de endpoints utilizando o módulo nativo do Playwright.
 * **Relatórios Customizados:** Configurar geradores de relatórios visuais com Allure.
+
+## Gerar relatório
+* npm run test
+* npm run allure:generate
+* npm run allure:generate
