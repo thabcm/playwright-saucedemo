@@ -89,4 +89,16 @@ test.describe('Sauce Demo - Fluxo de Compra', () => {
     // Valida se voltou para a página principal da loja
     await expect(page).toHaveURL('https://www.saucedemo.com/inventory.html');
   });
+
+  test('Deve fechar a mensagem de erro de login ao clicar no botao X', async () => {
+    // Força o erro fazendo login com usuário bloqueado
+    await loginPage.realizarLogin('locked_out_user');
+    await expect(loginPage.errorMessage).toBeVisible();
+
+    // Clica no "X" usando o método do POM
+    await loginPage.fecharMensagemErro();
+
+    // Valida que o container de erro sumiu da tela
+    await expect(loginPage.errorMessage).not.toBeVisible();
+  });
 });

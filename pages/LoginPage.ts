@@ -7,6 +7,7 @@ export class LoginPage {
   readonly passwordInput: Locator;
   readonly loginButton: Locator;
   readonly errorMessage: Locator;
+  readonly botaoFecharErro: Locator;
 
   // Inicializar os locators no construtor
   constructor(page: Page) {
@@ -15,6 +16,7 @@ export class LoginPage {
     this.passwordInput = page.locator('[data-test="password"]');
     this.loginButton = page.locator('[data-test="login-button"]');
     this.errorMessage = page.locator('[data-test="error"]');
+    this.botaoFecharErro = page.locator('.error-button');
   }
 
   // Criar os métodos de ação
@@ -27,5 +29,9 @@ export class LoginPage {
     // Se não passar a senha, usa a padrão do site
     await this.passwordInput.fill(senha || 'secret_sauce');
     await this.loginButton.click();
+  }
+
+  async fecharMensagemErro() {
+    await this.botaoFecharErro.click();
   }
 }
