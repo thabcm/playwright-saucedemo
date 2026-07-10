@@ -12,6 +12,7 @@ export class ProductsPage {
   readonly linkTwitter: Locator;
   readonly linkFacebook: Locator;
   readonly primeiroProdutoLink: Locator;
+  readonly botaoVoltar: Locator;
 
   // Inicializar os locators no construtor
   constructor(page: Page) {
@@ -25,6 +26,7 @@ export class ProductsPage {
     this.linkTwitter = page.locator('.social_twitter a');
     this.linkFacebook = page.locator('.social_facebook a');
     this.primeiroProdutoLink = page.locator('[data-test="item-4-title-link"]');
+    this.botaoVoltar = page.locator('[data-test="back-to-products"]');
   }
 
   // Criar os métodos de ação
@@ -43,5 +45,9 @@ export class ProductsPage {
   async obterPrecosComoNumeros(): Promise<number[]> {
     const todosPrecosTexto = await this.precosProdutos.allTextContents();
     return todosPrecosTexto.map(preco => parseFloat(preco.replace('$', '')));
+  }
+  
+  async voltarParaProdutos() {
+    await this.botaoVoltar.click();
   }
 }

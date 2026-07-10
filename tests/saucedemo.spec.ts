@@ -75,4 +75,18 @@ test.describe('Sauce Demo - Fluxo de Compra', () => {
     const nomeProdutoDetalhe = page.locator('[data-test="inventory-item-name"]');
     await expect(nomeProdutoDetalhe).toHaveText('Sauce Labs Backpack');
   });
+
+  test('Deve voltar para a lista de produtos ao clicar no botao voltar', async ({ page }) => {
+    await loginPage.realizarLogin('standard_user');
+    
+    // Entra na página de detalhes do produto
+    await productsPage.primeiroProdutoLink.click();
+    await expect(page).toHaveURL(/.*inventory-item.html/);
+
+    // Usa a nova ação do POM para voltar
+    await productsPage.voltarParaProdutos();
+
+    // Valida se voltou para a página principal da loja
+    await expect(page).toHaveURL('https://www.saucedemo.com/inventory.html');
+  });
 });
