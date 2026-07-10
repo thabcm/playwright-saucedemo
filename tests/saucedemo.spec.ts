@@ -1,6 +1,7 @@
 import { test, expect } from '@playwright/test';
 import { LoginPage } from '../pages/LoginPage';
 import { ProductsPage } from '../pages/ProductsPage';
+import { faker } from '@faker-js/faker';
 
 test.describe('Sauce Demo - Fluxo de Compra', () => {
   let loginPage: LoginPage;
@@ -100,5 +101,33 @@ test.describe('Sauce Demo - Fluxo de Compra', () => {
 
     // Valida que o container de erro sumiu da tela
     await expect(loginPage.errorMessage).not.toBeVisible();
+  });
+
+  test('Deve preencher os dados de checkout usando massa de dados dinamica', async ({ page }) => {
+    await loginPage.realizarLogin('standard_user');
+    await productsPage.adicionarMochilaAoCarrinho();
+    
+    // Navega até o carrinho e avança para o checkout
+    await page.locator('.shopping_cart_link').click();
+    await page.locator('[data-test="checkout"]').click();
+
+    // Gerando os dados aleatórios com o Faker
+    const nomeAleatorio = faker.person.firstName();
+    const sobrenomeAleatorio = faker.person.lastName();
+    const cepAleatorio = faker.location.zipCode('#####-###');
+
+    // Preenche os campos usando as variáveis dinâmicas
+    await page.locator('[data-test="firstName"]').fill(nomeAleatorio);
+    await page.locator('[data-test="lastName"]').fill(sobrenomeAleatorio);
+    await page.locator('[data-test="postalCode"]').fill(cepAleatorio);
+    
+    // Avança e finaliza a compra
+    await page.locator('[data-test="continue"]').click();
+    await page.locator('[data-test="finish"]').click();
+
+    // Valida a tela de sucesso
+    const sucessoHeader = page.locator('.complete-header');
+    await expect(sucessoHeader).toBeVisible();
+    await expect(sucessoHeader).toHaveText('Thank you for your order!');
   });
 });
