@@ -10,10 +10,8 @@ O objetivo principal foi aplicar boas práticas de automação, estruturando o p
 * **Ordenação:** Validação lógica do filtro de produtos por preço (menor para maior).
 * **Links de Redes Sociais:** Validar se os botões do rodapé redirecionam para as URLs corretas.
 * **Página de Detalhes:** Validar a abertura da tela de um produto específico ao clicar em seu nome.
-
-## Backlog
 * **Navegação de Retorno:** Testar o botão "Voltar para os produtos" de dentro da tela de detalhes.
 * **Interação com Mensagens:** Validar o fechamento da barra de erro de login ao clicar no botão "X".
 * **Massa de dados dinâmica:** Utilizar bibliotecas para gerar dados aleatórios nos formulários de checkout.
-* **Testes de API:** Automatizar testes de integração consumindo os endpoints do Sauce Demo.
-* **Relatórios Customizados:** Configurar geradores de relatórios visuais mais avançados.
+* **Testes de API:** Automatizar testes de consumo de endpoints utilizando o módulo nativo do Playwright.
+* **Relatórios Customizados:** Configurar geradores de relatórios visuais com Allure.
