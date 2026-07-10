@@ -19,4 +19,4 @@ O objetivo principal foi aplicar boas práticas de automação, estruturando o p
 ## Gerar relatório
 * npm run test
 * npm run allure:generate
-* npm run allure:generate
+* npm run allure:open
